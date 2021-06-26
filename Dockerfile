@@ -20,10 +20,6 @@ RUN apt update && apt -y install retroshare-gui i2p tor torsocks obfs4proxy tor-
 
 # Just to squash error message during startup - temporary
 RUN mkdir -p /root/.config
-RUN mkdir -p /var/lib/tor/hidden_rs \
-  && chown -R root:root /var/lib/tor/hidden_rs \
-  && chmod -R 0600 /var/lib/tor/hidden_rs
-
 
 COPY tor-supervisor.conf /etc/supervisor/conf.d/tor-supervisor.conf
 COPY i2p-supervisor.conf /etc/supervisor/conf.d/i2p-supervisor.conf
