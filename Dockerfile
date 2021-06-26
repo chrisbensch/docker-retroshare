@@ -18,8 +18,8 @@ RUN wget https://deb.torproject.org/torproject.org/pool/main/d/deb.torproject.or
 
 RUN apt update && apt -y install retroshare-gui i2p tor torsocks obfs4proxy tor-geoipdb
 
-# Just to squash error message during startup
+# Just to squash error message during startup - temporary
 RUN mkdir -p /root/.config
 
-COPY torrc /etc/tor/torrc
+
 COPY tor-supervisor.conf /etc/supervisor/conf.d/tor-supervisor.conf
