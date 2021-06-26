@@ -1,19 +1,11 @@
-FROM ubuntu
+FROM chrisbensch/docker-ubuntu-vnc:xfce4
 
 VOLUME /tmp/.X11-unix
 
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt update \
-  && apt -y install wget gnupg xvfb x11-xserver-utils python3-pip lxterminal \
-  && pip3 install pyinotify \
-  && echo "deb [arch=amd64] https://xpra.org/ focal main" > /etc/apt/sources.list.d/xpra.list \
-  && wget -q https://xpra.org/gpg.asc -O- | apt-key add - \
-  && apt update \
-  && apt install -y xpra \
-  && mkdir -p /run/user/0/xpra
-
-RUN apt -y install wget gnupg2 curl software-properties-common apt-transport-https
+  && apt -y install wget gnupg2 curl software-properties-common apt-transport-https
 
 RUN echo 'deb http://download.opensuse.org/repositories/network:/retroshare/xUbuntu_20.04/ /' >> /etc/apt/sources.list.d/retroshare.list
 RUN wget -qO - http://download.opensuse.org/repositories/network:/retroshare/xUbuntu_20.04/Release.key | apt-key add -
@@ -24,8 +16,10 @@ RUN echo "deb [arch=amd64] https://deb.torproject.org/torproject.org $(lsb_relea
 RUN wget https://deb.torproject.org/torproject.org/pool/main/d/deb.torproject.org-keyring/deb.torproject.org-keyring_2020.11.18_all.deb \
   && apt -y install ./deb.torproject.org-keyring_2020.11.18_all.deb
 
-RUN apt update && apt -y install retroshare-gui i2p tor
+RUN apt update && apt -y install retroshare-gui i2p tor torsocks obfs4proxy tor-geoipdb
 
-ENTRYPOINT ["xpra", "start", ":10000", "--bind-tcp=0.0.0.0:8080", \
-  "--mdns=no", "--webcam=no", "--no-daemon", "--pulseaudio=no", \
-  "--start-on-connect=lxterminal"]
+# Just to squash error message during startup
+RUN mkdir -p /root/.config
+
+COPY torrc /etc/tor/torrc
+COPY tor-supervisor.conf /etc/supervisor/conf.d/tor-supervisor.conf
