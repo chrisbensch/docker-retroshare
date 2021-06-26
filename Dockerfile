@@ -23,3 +23,4 @@ RUN mkdir -p /root/.config
 
 
 COPY tor-supervisor.conf /etc/supervisor/conf.d/tor-supervisor.conf
+COPY i2p-supervisor.conf /etc/supervisor/conf.d/i2p-supervisor.conf
