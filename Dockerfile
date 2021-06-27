@@ -16,10 +16,11 @@ RUN echo "deb [arch=amd64] https://deb.torproject.org/torproject.org $(lsb_relea
 RUN wget https://deb.torproject.org/torproject.org/pool/main/d/deb.torproject.org-keyring/deb.torproject.org-keyring_2020.11.18_all.deb \
   && apt -y install ./deb.torproject.org-keyring_2020.11.18_all.deb
 
-RUN apt update && apt -y install retroshare-gui i2p tor torsocks obfs4proxy tor-geoipdb
+RUN apt update && apt -y install retroshare-gui i2p tor torsocks obfs4proxy tor-geoipdb torbrowser-launcher privoxy
 
 # Just to squash error message during startup - temporary
 RUN mkdir -p /root/.config
 
+COPY privoxy.config /etc/privoxy/config
 COPY tor-supervisor.conf /etc/supervisor/conf.d/tor-supervisor.conf
 COPY i2p-supervisor.conf /etc/supervisor/conf.d/i2p-supervisor.conf
