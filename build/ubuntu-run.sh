@@ -17,7 +17,7 @@ start_tor_service() {
 }
 
 start_i2p_service() {
-    su -c 'i2prouter start' i2psvc
+    su -c 'i2prouter start' i2p
 }
 
 stop_xrdp_services() {
