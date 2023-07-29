@@ -1,11 +1,6 @@
 FROM chrisbensch/docker-ubuntu-xrdp:latest
 
-#VOLUME /tmp/.X11-unix
-
 ENV DEBIAN_FRONTEND noninteractive
-
-#RUN apt-get update && \
-#    apt-get -y install gnupg2
 
 RUN echo 'deb http://download.opensuse.org/repositories/network:/retroshare/xUbuntu_22.04/ /' >> /etc/apt/sources.list.d/retroshare.list
 
@@ -32,13 +27,6 @@ RUN apt-get update && \
 COPY ./build/ubuntu-run.sh /usr/bin/
 RUN mv /usr/bin/ubuntu-run.sh /usr/bin/run.sh
 RUN chmod +x /usr/bin/run.sh
-
-# Just to squash error message during startup - temporary
-#RUN mkdir -p /root/.config
-
-#COPY privoxy.config /etc/privoxy/config
-#COPY tor-supervisor.conf /etc/supervisor/conf.d/tor-supervisor.conf
-#COPY i2p-supervisor.conf /etc/supervisor/conf.d/i2p-supervisor.conf
 
 #RUN apt -y autoremove \
 #  && apt -y autoclean \

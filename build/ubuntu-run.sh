@@ -17,7 +17,7 @@ start_tor_service() {
 }
 
 start_i2p_service() {
-    su -c 'i2prouter start' retroshare
+    su -c 'i2prouter start' i2psvc
 }
 
 stop_xrdp_services() {
